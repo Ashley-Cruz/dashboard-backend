@@ -1,3 +1,4 @@
+const { findById } = require("../models/card");
 const Card = require("../models/card");
 const Client = require("../models/client");
 
@@ -73,7 +74,50 @@ const obtainListClients = async() => {
     }
 }
 
+const updateClient = async(payload) => {
+    try {
+        const {id} = payload;
+
+        const clientUpdated = await Client.findByIdAndUpdate(id, payload);
+        
+        return {
+            ok: true,
+            data: clientUpdated
+        }
+
+    } catch (error) {
+        console.log(error);
+        return {
+            ok: false,
+            msg: 'Hable con el administrador'
+        }
+    }
+}
+
+const deleteClient = async(id) => {
+
+    try {
+        
+        const clientDelete = await Client.findByIdAndUpdate(id, {active: false});
+        const cardDelete = await Card.findByIdAndUpdate(clientDelete.card, {active: false});
+
+        return {
+            ok: true,
+            clientDelete,
+            cardDelete
+        }
+
+    } catch (error) {
+        return {
+            ok: false,
+            msg: 'Hable con el administrador'
+        }
+    }
+}
+
 module.exports = {
     createClient,
-    obtainListClients
+    obtainListClients,
+    updateClient,
+    deleteClient
 }

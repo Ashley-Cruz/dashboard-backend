@@ -1,4 +1,4 @@
-const { createClient, obtainListClients } = require("../controllers/client");
+const { createClient, obtainListClients, updateClient, deleteClient } = require("../controllers/client");
 const { userConnected, userDisconnected } = require("../controllers/sockets");
 const { validateJWT } = require("../helpers/jwt");
 
@@ -31,7 +31,18 @@ class Sockets {
                 socket.emit('create-client', client);
                 this.io.emit('list-clients', await obtainListClients());
             })
-
+            
+            socket.on('update-client', async(payload) => {
+                const client = await updateClient(payload);
+                socket.emit('update-client', client);
+                this.io.emit('list-clients', await obtainListClients());
+            })
+            
+            socket.on('delete-client', async(payload) => {
+                const client = await deleteClient(payload);
+                socket.emit('delete-client', client);
+                this.io.emit('list-clients', await obtainListClients());
+            })
 
             socket.on('disconnect', async() => {
                 await userDisconnected(uid);
