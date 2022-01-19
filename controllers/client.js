@@ -1,6 +1,7 @@
 const { findById } = require("../models/card");
 const Card = require("../models/card");
 const Client = require("../models/client");
+const User = require("../models/user");
 
 const createClient = async(payload) => {
 

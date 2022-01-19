@@ -1,5 +1,6 @@
 const { createClient, obtainListClients, updateClient, deleteClient } = require("../controllers/client");
 const { userConnected, userDisconnected } = require("../controllers/sockets");
+const { obtainUsers } = require("../controllers/user");
 const { validateJWT } = require("../helpers/jwt");
 
 class Sockets {
@@ -20,7 +21,9 @@ class Sockets {
 
             await userConnected(uid);
 
-            this.io.emit('list-clients', await obtainListClients());
+            this.io.emit('list-users', await obtainUsers());
+
+            socket.emit('list-clients', await obtainListClients());
             socket.on('list-clients', async() => {
                 this.io.emit('list-clients', await obtainListClients());
             })

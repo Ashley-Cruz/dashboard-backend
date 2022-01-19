@@ -35,7 +35,9 @@ const ClientSchema = Schema({
         required: true
     },
     analyst: {
-        type: String,
+        _id: String,
+        type: Schema.Types.ObjectId,
+        ref: 'User',
         required: true
     },
     card: {
