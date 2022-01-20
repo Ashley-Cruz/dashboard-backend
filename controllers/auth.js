@@ -14,7 +14,8 @@ const login = async(req, res) => {
         if(!validUser){
             return res.status(400).json({
                 ok: false,
-                msg: 'Usuario no válido'
+                msg: 'Usuario no válido',
+                exist: true
             })
         }
 
@@ -23,7 +24,8 @@ const login = async(req, res) => {
         if(!validPassword){
             return res.status(400).json({
                 ok: false,
-                msg: 'Usuario no válido'
+                msg: 'Usuario no válido',
+                exist: true
             })
         }
 
@@ -43,7 +45,8 @@ const login = async(req, res) => {
         console.log(error);
         res.status(500).json({
             ok: false,
-            msg: 'Hable con el administrador'
+            msg: 'Hable con el administrador',
+            exist: false
         })
     }
 }
@@ -59,7 +62,8 @@ const signUp = async(req, res=response) => {
         if(userExist){
             return res.status(400).json({
                 ok: false,
-                msg: 'El usuario ya existe'
+                msg: 'El usuario ya existe',
+                exist: true
             })
         }
 
@@ -88,7 +92,8 @@ const signUp = async(req, res=response) => {
         console.log(error);
         res.status(500).json({
             ok: false,
-            msg: 'Hable con el administrador'
+            msg: 'Hable con el administrador',
+            exist: false
         })
     }
 }

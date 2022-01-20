@@ -4,8 +4,7 @@ const ClientSchema = Schema({
 
     email: {
         type: String,
-        required: true,
-        unique: true
+        required: true
     },
     number: {
         type: Number,
